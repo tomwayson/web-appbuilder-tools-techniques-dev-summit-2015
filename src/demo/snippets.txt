@@ -1,0 +1,5 @@
+      this.subWidget = new SubWidget({
+        map: this.map,
+        config: this.config
+      });
+      this.subWidget.placeAt(this.domNode);

@@ -1,0 +1,15 @@
+{
+  "name": "custom-wab-widgets",
+  "version": "0.0.0",
+  "description": "Demo of building custom widgets for Web App Builder",
+  "author": {
+    "name": "Esri Professional Services"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-sync": "0.0.7"
+  },
+  "version": "0.0.0",
+  "dependencies": {}
+}
