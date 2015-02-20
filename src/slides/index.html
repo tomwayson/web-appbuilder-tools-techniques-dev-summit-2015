@@ -119,8 +119,7 @@
       </li>
       <li class="fragment">Other frameworks/templates might be better for:
         <ul>
-          <li class="fragment">Narrowly focussed apps, especially mobile first</li>
-          <li class="fragment">Large, complex custom apps with specialized workflows</li>
+          <li class="fragment">Specific, custom web apps, with specialized workflows</li>
           <li class="fragment">When there is a template that does <em>almost all</em> of app functionality</li>
         </ul>
       </li>
@@ -130,41 +129,19 @@
     <h2>Web AppBuilder Tools and Techniques</h2>
       <p class="fragment" data-fragment-index="1">Tools and techniques to help you:</p>
       <ul>
-        <li class="fragment">Use source control (TFS, git)</li>
-<!--         <li class="fragment">Work with other libraries</li> -->        <li class="fragment">Scaffold out boilerplate files</li>
+        <li class="fragment">Use sounce control</li>
+        <li class="fragment">Scaffold out boilerplate files</li>
         <li class="fragment">Create widgets that can be used outside the WAB</li>
         <li class="fragment">Test your code</li>
         <li class="fragment">TODO: remove? Use WAB styles and widgets in your code</li>
       </ul>
   </section>
-  <!--
-  <section class="stack">
-    <section>
-      <h2>Integrating with Portal</h2>
-      <figure>
-        <img src="images/space-portal_ronel_reyes-8478738275.jpg" />
-        <figcaption><small><a href="https://www.flickr.com/photos/ronel_reyes/8478738275/"><i class="fa fa-flickr"></i> ronel_reyes</a></small></figcaption>
-      </figure>
-    </section>
-    <section>
-      <h3>Adding Layers to the Map</h3>
-      <p>You'r not limited to wrking with the layers defined in the webmap</p>
-      <ul>
-        <li class="fragment">Your widget can add / remove layers to the webmap
-        <ul>
-          <li>Add in <code>postCreate()</code></li>
-          <li>Remove in <code>destroy()</code> (optional)</li>
-        </ul></li>
-      </ul>
-    </section>
-  </section>
-  -->
   <section class="stack">
     <section>
       <h2>How do I Check in My Code?</h2>
       <figure>
-        <img src="images/git-screen.jpg" />
-        <figcaption><small><a href="https://www.flickr.com/photos/heipei/3619118433"><i class="fa fa-flickr"></i> heipei</a></small></figcaption>
+        <img src="images/git-push-force.png" style="border: none" />
+        <figcaption><small><a href="https://twitter.com/codefinger/status/457004879975026688"><i class="fa fa-twitter"></i> @codefinger</a></small></figcaption>
       </figure>
     </section>
     <section>
@@ -178,56 +155,61 @@
     </section>
     <section>
       <h3>Task Automation to the Rescue</h3>
-      <p>Work in your source control tree and use scripts to copy files</p>
-      <ul>
-        <li class="fragment"><a href="http://gruntjs.com/">Grunt</a>
-          <ul class="fragment">
-            <li><a href="https://www.npmjs.org/package/grunt-contrib-watch">grunt-contrib-watch</a></li>
-            <li>with <a href="https://www.npmjs.org/package/grunt-sync">grunt-sync</a></li>
-          </ul>
-        </li>
-      </ul>
+      <figure>
+        <img src="images/grunt.png" style="border: none; background: transparent" />
+      </figure>
+      <div class="fragment">
+        <p>Work in your source control tree and use scripts to copy files</p>
+        <ul>
+          <li><a href="http://gruntjs.com/">Grunt</a>
+            <ul >
+              <li><a href="https://www.npmjs.org/package/grunt-contrib-watch">grunt-contrib-watch</a></li>
+              <li>with <a href="https://www.npmjs.org/package/grunt-sync">grunt-sync</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </section>
     <section>
       <h3>Example: <span class="fileName">Gruntfile.js</span></h3>
       <pre><code>
   module.exports = function(grunt) {
-    var appDir = 'C:\\code\\test\\arcgis-web-appbuilder-1.0beta2\\server\\apps\\2';
-    var stemappDir = 'C:\\code\\test\\arcgis-web-appbuilder-1.0beta2\\client\\stemapp';
+  var appDir = 'C:\\code\\arcgis-web-appbuilder-1.0\\server\\apps\\2';
+  var stemappDir = 'C:\\code\\arcgis-web-appbuilder-1.0\\client\\stemapp';
 
-    grunt.initConfig({
+  grunt.initConfig({
     watch: {
       main: {
-      files: ['src/**'],
-      tasks: ['sync'],
-      options: {
-        spawn: false
-      }
+        files: ['src/**'],
+        tasks: ['sync'],
+        options: {
+          spawn: false
+        }
       }
     },
 
     sync: {
       main: {
-      files: [{
-        cwd: 'src',
-        src: ['**'],
-        dest: appDir
-      }, {
-        cwd: 'src',
-        src: ['**'],
-        dest: stemappDir
-      }],
-      verbose: true // Display log messages when copying files
+        files: [{
+          cwd: 'src',
+          src: ['**'],
+          dest: appDir
+        }, {
+          cwd: 'src',
+          src: ['**'],
+          dest: stemappDir
+        }],
+        verbose: true // Display log messages when copying files
       }
     }
 
-    });
+  });
 
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-sync');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-sync');
 
-    grunt.registerTask('default', ['sync', 'watch']);
-  };
+  grunt.registerTask('default', ['sync', 'watch']);
+};
       </code></pre>
     </section>
   </section>
@@ -443,6 +425,33 @@
   </section>
   <section class="stack">
     <section>
+      <h2>Where Can I Find or Share Widgets?</h2>
+      <figure>
+        <img src="http://placehold.it/200x100" />
+      </figure>
+    </section>
+    <section>
+      <h3>Sharing</h3>
+      <ul>
+        <li class="fragment">Sharing:
+          <ul>
+            <li><a href="https://geonet.esri.com/community/gis/web-gis/web-appbuilder">Web AppBuilder for ArcGIS Community</a></li>
+            <li><a href="https://github.com/Esri/arcgis-webappbuilder-widgets-themes">github.com/Esri/arcgis-webappbuilder-widgets-themes</a>
+            <ul><li>Pull requests welcome!</li></ul></li>
+          </ul>
+        </li>
+        <li class="fragment">Discover great widgets:
+          <ul>
+            <li><a href="https://github.com/Esri/solutions-webappbuilder-widgets">https://github.com/Esri/solutions-webappbuilder-widgets</a></li>
+            <li>Gavin todo: simple 1-page finder app?</li>
+            <li>More to come!</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </section>
+  <section class="stack">
+    <section>
       <h2>Where Can I Get Help?</h2>
       <figure>
         <img src="images/frustrated.jpg" />
@@ -450,19 +459,18 @@
       </figure>
     </section>
     <section>
-      <h3>Resuorces</h3>
+      <h3>Resources</h3>
       <p>Here are some resources to get you started:</p>
       <ul>
         <li class="fragment">Videos:
           <ul><li>Intro: <a href="http://video.esri.com/watch/3848/arcgis-webapp-builder-an-introduction">UC 2014</a> - <a href="http://video.esri.com/watch/3306/intro-web-appbuilder-for-arcgis_dash_javascript-apps-made-easy">DevSummit 2014</a></li><li>Customizing: <a href="http://video.esri.com/watch/3845/arcgis-webapp-builder-customizing-and-extending">UC 2014</a> - <a href="http://video.esri.com/watch/3362/customizing-and-extending-web-appbuilder-for-arcgis">DevSummit 2014</a></li></ul></li>
         <li class="fragment">Documentaion:
           <ul>
-          <li>Online: <a href="https://developers.arcgis.com/web-appbuilder/">Developer Edition</a></li>
+          <li>Online: <a href="https://developers.arcgis.com/web-appbuilder/">Developer Edition</a> (Download Here!)</li>
           <li>Bundled: http://localhost:3344/webappbuilder/help/</li></ul></li>
         <li class="fragment">GeoNet:
           <ul>
             <li><a href="https://geonet.esri.com/community/gis/web-gis/web-appbuilder">Web AppBuilder for ArcGIS Community</a></li>
-            <li><a href="https://geonet.esri.com/groups/web-app-builder-custom-widgets">Web AppBuilder Custom Widgets</a></li>
           </ul>
         </li>
         <li class="fragment">Widget Repositories:
