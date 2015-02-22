@@ -1,11 +1,11 @@
 module.exports = function(grunt) {
-  var appDir = 'C:\\code\\test\\arcgis-web-appbuilder-1.0beta2\\server\\apps\\14';
-  var stemappDir = 'C:\\code\\test\\arcgis-web-appbuilder-1.0beta2\\client\\stemapp';
+  var appDir = 'C:\\code\\arcgis-web-appbuilder-1.0\\server\\apps\\2';
+  var stemappDir = 'C:\\code\\arcgis-web-appbuilder-1.0\\client\\stemapp';
 
   grunt.initConfig({
     watch: {
       main: {
-        files: ['widgets/**'],
+        files: ['src/**'],
         tasks: ['sync'],
         options: {
           spawn: false
@@ -16,10 +16,12 @@ module.exports = function(grunt) {
     sync: {
       main: {
         files: [{
-          src: ['widgets/**/*'],
+          cwd: 'src',
+          src: ['**'],
           dest: appDir
         }, {
-          src: ['widgets/**/*'],
+          cwd: 'src',
+          src: ['**'],
           dest: stemappDir
         }],
         verbose: true // Display log messages when copying files
