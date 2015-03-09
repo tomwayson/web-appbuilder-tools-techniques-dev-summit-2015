@@ -47,6 +47,12 @@
       .reveal .fileName {
         color: #eee8d5;
       }
+
+      .lego-rapper {
+        height: 460px;
+        width: 460px;
+      }
+
     </style>
 
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
@@ -155,7 +161,7 @@
     <section>
       <h3>Task Automation to the Rescue</h3>
       <figure>
-        <img src="images/grunt.png" style="border: none; background: transparent" />
+        <img src="images/grunt.png" style="border: none; background: transparent; box-shadow: none;" />
       </figure>
       <div class="fragment">
         <p>Work in your source control tree and use scripts to copy files</p>
@@ -284,6 +290,39 @@
  -->
   <section class="stack">
     <section>
+      <h2>TIP: Become a Wrap Star</h2>
+      <figure>
+        <img src="images/lego-rapper-7302642156_268095d4f2_o.jpg" class="lego-rapper" />
+        <figcaption><small><a href="https://www.flickr.com/photos/seo2/7302642156/"><i class="fa fa-flickr"></i> seo2</a></small></figcaption>
+      </figure>
+    </section>
+    <section>
+      <h3>Use the Web AppBuilder Widgets As Wrappers</h3>
+      <ul class="fragment">
+        <li><code>BaseWidget</code> is the <em>interface</em> between your widget(s) and the rest of the app (the panel, dialog windows, other widgets, etc)</li>
+        <li>Create sub widget(s) for your business logic / workflows</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Example: Using Sub-Widgets</h3>
+      <img src="images/nasa-screenshot.png" />
+    </section>
+    <section>
+      <h3>Advantages of the wrap star lifestyle</h3>
+      <ul>
+        <li class="fragment">Widgets can be used outside the Web AppBuilder</li>
+        <li class="fragment">Decoupled widgets are:
+          <ul>
+            <li>Faster to develop</li>
+            <li>Easier to test</li>
+          </ul>
+        </li>
+      </ul>
+      <p class="fragment">... but isn't it more work to set up?</p>
+    </section>
+  </section>
+  <section class="stack">
+    <section>
       <h2>Tools to Help You Build Widgets</h2>
       <figure>
         <img src="images/legos.jpg" />
@@ -307,30 +346,15 @@
 
       </script>
     </section>
-  </section>
-  <section class="stack">
     <section>
-      <h2>Taking Your Widgets on the Road</h2>
-      <figure>
-        <img src="images/on-the-road_cdm-3388539437.jpg" />
+      <h3>A generator for your sub widgets</h3>
+        <ul class="fragment">
+          <li>Yeoman generator: <a href="https://www.npmjs.org/package/generator-esri-widget">generator-esri-widget</a></li>
+        </ul>
+      <figure class="fragment">
+        <img src="images/yo-esri-widget.png" />
         <figcaption><small><a href="https://www.flickr.com/photos/cdm/3388539437"><i class="fa fa-flickr"></i> cdm</a></small></figcaption>
       </figure>
-    </section>
-    <section>
-      <h3>Use the Web AppBuilder Widget As Wrapper</h3>
-      <ul>
-        <li class="fragment"><code>BaseWidget</code> is the <em>interface</em> between your widget(s) and the rest of the app (the panel, dialog windows, other widgets, etc)</li>
-        <li class="fragment">Create sub widget(s) for your specific functionality</li>
-        <li class="fragment">Isn't that more work?
-          <ul>
-            <li class="fragment">Yeoman generator: <a href="https://www.npmjs.org/package/generator-esri-widget">generator-esri-widget</a></li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-    <section>
-      <h3>Example: Using Sub-Widgets</h3>
-      <img src="images/nasa-screenshot.png" />
     </section>
   </section>
   <section class="stack">
@@ -357,6 +381,7 @@
       <img src="images/karma-screenshot.PNG" alt="screenshot of Karma test resutls" />
     </section>
   </section>
+<!--
   <section class="stack">
     <section>
       <h2>What About All the Web AppBuilder Goodies?</h2>
@@ -428,14 +453,15 @@
     <section>
       <h3>Demo: Using Jimu Widgets</h3>
       <img src="images/drs-drawbox-screenshot.png" />
-      <!-- TODO: screenshot -->
     </section>
   </section>
+-->
   <section class="stack">
     <section>
       <h2>Where Can I Find or Share Widgets?</h2>
       <figure>
-        <!-- <img src="http://placehold.it/200x100" /> can't find a good image ... maybe can find one later -->
+        <img src="images/st3f4n_5542624188.jpg" />
+        <figcaption><small><a href="https://www.flickr.com/photos/st3f4n/5542624188"><i class="fa fa-flickr"></i> st3f4n</a></small></figcaption>
       </figure>
     </section>
     <section>
@@ -488,9 +514,11 @@
   </section>
   <section>
     <h2>Thank You</h2>
+    <p>
+      <a href="http://www.esri.com/events/session-rater?id=90#18969">esri.com/events/session-rater?id=90#18969</a>
+    </p>
     <figure>
-      <img src="images/st3f4n_5542624188.jpg" />
-      <figcaption><small><a href="https://www.flickr.com/photos/st3f4n/5542624188"><i class="fa fa-flickr"></i> st3f4n</a></small></figcaption>
+      <img src="images/vote.png" height="500" />
     </figure>
     <p>
       <a href="mailto:grehkemper@esri.com">grehkemper@esri.com</a> -
@@ -500,17 +528,6 @@
       <a href="https://github.com/tomwayson">@tomwayson</a> <a href="https://twitter.com/tomwayson"><i class="fa fa-twitter" title="Twitter"></i></a> <a href="https://github.com/tomwayson"><i class="fa fa-github" title="GitHub"></i></a>
     </p>
   </section>
-
-  <section>
-    <h2>Rate this session</h2>
-    <figure>
-      <img src="images/vote.png" height="500" />
-    </figure>
-    <p>
-      <a href="http://www.esri.com/events/session-rater?id=90#18969">esri.com/events/session-rater?id=90#18969</a>
-    </p>
-  </section>
-
 </div>
 
     <script src="lib/js/head.min.js"></script>
