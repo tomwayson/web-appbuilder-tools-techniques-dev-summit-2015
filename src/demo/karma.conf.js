@@ -16,7 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'test/main.js',
-      {pattern: 'widgets/**/*', included: false},
+      {pattern: 'src/widgets/**/*', included: false},
     ],
 
 
@@ -56,19 +56,12 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['Firefox'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
 
-
-    plugins: [
-      'karma-dojo',
-      'karma-mocha',
-      'karma-chai',
-      'karma-chrome-launcher'
-    ]
 });
 };

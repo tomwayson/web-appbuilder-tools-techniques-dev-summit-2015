@@ -1,4 +1,6 @@
 module.exports = function(grunt) {
+
+  // replace these with your own paths
   var appDir = 'C:\\code\\arcgis-web-appbuilder-1.0\\server\\apps\\2';
   var stemappDir = 'C:\\code\\arcgis-web-appbuilder-1.0\\client\\stemapp';
 

@@ -1,5 +1,21 @@
+define([
+  'dojo/_base/declare',
+
+  'jimu/BaseWidget',
+
+  './SubWidget'
+], function(
+  declare,
+  BaseWidget,
+  SubWidget
+) {
+
+      // in postCrate()
       this.subWidget = new SubWidget({
         map: this.map,
         config: this.config
       });
       this.subWidget.placeAt(this.domNode);
+
+      // in startup()
+      this.subWidget.startup();

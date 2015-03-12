@@ -28,4 +28,4 @@ node_modules
 .lock-wscript
 
 # demo code
-src/demo/widgets
+src/demo/src
