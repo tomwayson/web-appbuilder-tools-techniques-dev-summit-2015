@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Tools and Techniques for Web AppBuilder Development</title>
+
+    <meta name="description" content="Tips and tools to help create custom Web AppBuilder Widgets">
+    <meta name="author" content="Tom Wayson">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- for icons -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+      /* fix for font-awesome icons */
+      .reveal i.fa {
+        font-family: FontAwesome;
+        font-style: normal;
+      }
+
+      .reveal figcaption small {
+        font-size: .4em;
+      }
+
+      .reveal li pre {
+        margin-left: 0;
+        margin-right: 0;
+        width: 75%;
+      }
+
+      /*.reveal .fileName {
+        color: gold;
+      }*/
+
+      /*moon theme*/
+      .reveal .fileName {
+        color: #eee8d5;
+      }
+
+      .lego-rapper {
+        height: 460px;
+        width: 460px;
+      }
+
+    </style>
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+  <section>
+    <h1>Tools and Techniques for Web AppBuilder Development</h1>
+    <h3>Tom Wayson and Gavin Rehkemper</h3>
+    <h4>ESRI Database Services</h3>
+    <div style="width:50%; float: left;">
+      <p>
+        <a href="mailto:twayson@esri.com">twayson@esri.com</a>
+      </p>
+      <p>
+        <a href="https://github.com/tomwayson"><i class="fa fa-github" title="GitHub"></i>/tomwayson</a><br />
+        <a href="https://twitter.com/tomwayson"><i class="fa fa-twitter" title="Twitter"></i>/tomwayson</a>
+      </p>
+    </div>
+    <div style="width:50%; float: left;">
+      <p>
+        <a href="mailto:grehkemper@esri.com">grehkemper@esri.com</a>
+      </p>
+      <p>
+        <a href="https://github.com/gavinr"><i class="fa fa-github" title="GitHub"></i>/gavinr</a><br />
+        <a href="https://twitter.com/gavinrehkemper"><i class="fa fa-twitter" title="Twitter"></i>/gavinrehkemper</a>
+      </p>
+    </div>
+  </section>
+  <section>
+    <h3>Related Session</h3>
+    <h4>ArcGIS Web AppBuilder: Customizing and Extending</h4>
+    <p>Tomorrow (Friday, Mar 13) - 1:00 PM - Location: Pasadena/Sierra/Ventura</p>
+  </section>
+  <!-- removing about me/us slide for now, not needed -->
+<!--   <section>
+    <h2 style="text-align: center;">TODO: About <del>Me</del> Us</h2>
+    <h3 style="text-align: center;">Web Application Developer, Database Services</h3>
+    <p>Clients: Fed/state/local gov agencies, commercial agriculture, utilities</p>
+    <p>ArcGIS Online apps and templates</p>
+    <h3 style="text-align: center;">14 yrs as Web GIS Developer &amp; Consultant</h3>
+    <p>Clients: Electric utilities, local government</p>
+    <p>Technology: JavaScript, ASP.Net, Oracle Spatial</p>
+    <pre><code>// I &lt;3 JavaScript </code></pre>
+  </section>
+   -->
+  <section>
+    <h2 style="text-align: center;">What is the Web AppBuilder?</h2>
+    <p class="fragment">Brings "builder" experience from Flex/Silverlight to JavaScript</p>
+    <ul>
+      <li class="fragment">Good for:
+        <ul>
+          <li>Multi-purpose apps that need to run on multiple devices</li>
+          <li>Creating a suite of custom apps with consistent style/behavior
+          <li>Empowering non-devlopers to create apps</li>
+        </ul>
+      </li>
+      <li class="fragment">Other frameworks/templates might be better for:
+        <ul>
+          <li>Specific, custom web apps, with specialized workflows</li>
+          <li>When there is a template that does <em>almost all</em> of app functionality</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+  <section>
+    <h2>Web AppBuilder Tools and Techniques</h2>
+      <p>Tools and techniques to help you:</p>
+      <ul>
+        <li>Use source control</li>
+        <li>Scaffold out boilerplate files</li>
+        <li>Create widgets that can be used outside the WAB</li>
+        <li>Test your code</li>
+      </ul>
+  </section>
+  <section class="stack">
+    <section>
+      <h2>How do I Check in My Code?</h2>
+      <figure>
+        <img src="images/git-push-force.png" style="border: none" />
+        <figcaption><small><a href="https://twitter.com/codefinger/status/457004879975026688"><i class="fa fa-twitter"></i> @codefinger</a></small></figcaption>
+      </figure>
+    </section>
+    <section>
+      <h3>Web AppBuilder Folder Structure</h3>
+      <p>A standalone Node/Express app with a specific folder structure:</p>
+      <ul>
+        <li>Stem app: <span class="fileName">[install dir]/client/stemapp/widgets/[YourWidget]/</span></li>
+        <li>Built apps: <span class="fileName">[install dir]/server/apps/[AppId]/widgets/[YourWidget]/</span></li>
+      </ul>
+      <p><br />This probably should <strong>NOT</strong> be in your suorce control.</p>
+    </section>
+    <section>
+      <h3>Task Automation to the Rescue</h3>
+      <figure>
+        <img src="images/grunt.png" style="border: none; background: transparent; box-shadow: none;" />
+      </figure>
+      <div class="fragment">
+        <p>Work in your source control tree and use scripts to copy files</p>
+        <ul>
+          <li><a href="http://gruntjs.com/">Grunt</a>
+            <ul >
+              <li><a href="https://www.npmjs.org/package/grunt-contrib-watch">grunt-contrib-watch</a></li>
+              <li>with <a href="https://www.npmjs.org/package/grunt-sync">grunt-sync</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h3>Example: <span class="fileName">Gruntfile.js</span></h3>
+      <pre><code>
+  module.exports = function(grunt) {
+  var appDir = 'C:\\code\\arcgis-web-appbuilder-1.0\\server\\apps\\2';
+  var stemappDir = 'C:\\code\\arcgis-web-appbuilder-1.0\\client\\stemapp';
+
+  grunt.initConfig({
+    watch: {
+      main: {
+        files: ['src/**'],
+        tasks: ['sync'],
+        options: {
+          spawn: false
+        }
+      }
+    },
+
+    sync: {
+      main: {
+        files: [{
+          cwd: 'src',
+          src: ['**'],
+          dest: appDir
+        }, {
+          cwd: 'src',
+          src: ['**'],
+          dest: stemappDir
+        }],
+        verbose: true // Display log messages when copying files
+      }
+    }
+
+  });
+
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-sync');
+
+  grunt.registerTask('default', ['sync', 'watch']);
+};
+      </code></pre>
+    </section>
+    <section>
+      <video width="100%" height="100%" controls>
+        <source src="vid/wab-dev-summit-demo.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+      </video>
+      <aside class="notes">
+      </aside>
+    </section>
+  </section>
+
+  <!-- hiding integration w/ other libraries for now -->
+<!--
+  <section class="stack">
+    <section>
+      <h2>How Do I Load Other Libraries?</h2>
+      <figure>
+        <img src="images/spam_5086168739.jpg" />
+        <figcaption><small><a href="https://www.flickr.com/photos/spam/5086168739"><i class="fa fa-flickr"></i> spam</a></small></figcaption>
+      </figure>
+    </section>
+    <section>
+      <h3>Some Hacking Required</h3>
+      <p>Add refernces to <span class="fileName">init.js</span></p>
+      <ul>
+        <li class="fragment">Add CSS and Non-AMD JavaScript to <code>resources</code> array</li>
+        <li class="fragment">Add AMD libraries to <code>dojoConfig.packages</code> and/or <code>require</code> call</li>
+      </ul>
+      <p class="fragment"><br/>Typically done in an app (as opposed to the stem app)</p>
+    </section>
+    <section>
+      <h3>Example: Adding Reference to Bootstrap in <span class="fileName">init.js</span></h3>
+      <ol>
+        <li>Add CSS to <code>resources</code> array</li>
+        <li>Add <a href="https://github.com/xsokev/Dojo-Bootstrap">Dojo-Bootstrap</a> to <code>dojoConfig.packages</code> for interactive components (tabs, dropdowns, etc)</li>
+      </ol>
+      <p>See: <a href="https://github.com/tomwayson/web-appbuilder-bootstrap">https://github.com/tomwayson/web-appbuilder-bootstrap</a></p>
+<pre><code>
+    ...
+    resources = resources.concat([
+      window.apiUrl + 'dojo/resources/dojo.css',
+      window.apiUrl + 'dijit/themes/claro/claro.css',
+      window.apiUrl + 'esri/css/esri.css',
+      window.path + 'jimu.js/css/jimu.css',
+      // add a reference to the Bootstrap CSS
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'
+    ]);
+    ...
+    dojoConfig = {
+      ...
+      packages: [{
+        name: "widgets",
+        location: window.path + "widgets"
+      }, {
+        name: "jimu",
+        location: window.path + "jimu.js"
+      }, {
+        name: "themes",
+        location: window.path + "themes"
+      }, {
+        ...
+      }, {
+          // add Dojo-Bootstrap if you want to use bootstrap comontents
+          // like tabs, dropdowns, modals, collapses, tooltips, etc
+          name: "bootstrap",
+          location: "//rawgit.com/xsokev/Dojo-Bootstrap/master"
+      }]
+    };
+</code></pre>
+    </section>
+  </section>
+ -->
+  <section class="stack">
+    <section>
+      <h2>TIP: Become a Wrap Star</h2>
+      <figure>
+        <img src="images/lego-rapper-7302642156_268095d4f2_o.jpg" class="lego-rapper" />
+        <figcaption><small><a href="https://www.flickr.com/photos/seo2/7302642156/"><i class="fa fa-flickr"></i> seo2</a></small></figcaption>
+      </figure>
+    </section>
+    <section>
+      <h3>Use the Web AppBuilder Widgets As Wrappers</h3>
+      <ul class="fragment">
+        <li><code>BaseWidget</code> is the <em>interface</em> between your widget(s) and the rest of the app (the panel, dialog windows, other widgets, etc)</li>
+        <li>Create sub widget(s) for your business logic / workflows</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Example: Using Sub-Widgets</h3>
+      <img src="images/nasa-screenshot.png" />
+    </section>
+    <section>
+      <h3>Advantages of the wrap star lifestyle</h3>
+      <ul>
+        <li class="fragment">Widgets can be used outside the Web AppBuilder</li>
+        <li class="fragment">Decoupled widgets are:
+          <ul>
+            <li>Faster to develop</li>
+            <li>Easier to test</li>
+          </ul>
+        </li>
+      </ul>
+      <p class="fragment">... but isn't it more work to set up?</p>
+    </section>
+  </section>
+  <section class="stack">
+    <section>
+      <h2>Tools to Help You Build Widgets</h2>
+      <figure>
+        <img src="images/legos.jpg" />
+        <figcaption><small><a href="https://www.flickr.com/photos/ogimogi/2253657555"><i class="fa fa-flickr"></i> ogimogi</a></small></figcaption>
+      </figure>
+    </section>
+    <section data-markdown>
+      <script type="text/template">
+      ###Don&apos;t Write Widgets from Sratch
+      Copy or scaffold widget files:
+
+      - <!-- .element: class="fragment" -->Template: <span class="fileName">[stemapp dir]\widgets\samplewidgets\CustomWidgetTemplate</span>
+      - <!-- .element: class="fragment" -->Yeoman generator: [generator-esri-appbuilder-js](https://www.npmjs.org/package/generator-esri-appbuilder-js)
+      </script>
+    </section>
+    <section data-markdown>
+      <script type="text/template">
+        ###Example: Yeoman Generator
+
+        ![generator-esri-appbuilder-js screenshot](images/running-the-generators.png)
+
+      </script>
+    </section>
+    <section>
+      <h3>A generator for your sub widgets</h3>
+        <ul class="fragment">
+          <li>Yeoman generator: <a href="https://www.npmjs.org/package/generator-esri-widget">generator-esri-widget</a></li>
+        </ul>
+      <figure class="fragment">
+        <img src="images/yo-esri-widget.png" />
+        <figcaption><small><a href="https://www.flickr.com/photos/cdm/3388539437"><i class="fa fa-flickr"></i> cdm</a></small></figcaption>
+      </figure>
+    </section>
+    <section>
+      <h3>Related Session</h3>
+      <h4>A few of our favorite things</h4>
+      <p>Scott Davis</p>
+      <p>3PM Mesquite B</p>
+    </section>
+  </section>
+  <section class="stack">
+    <section>
+      <h2>How Do I Test My Code?</h2>
+      <figure>
+        <img width="512" alt="Exam" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/03/Exam.jpg/512px-Exam.jpg"/>
+        <figcaption><small><a title="By qperello, Alberto G [CC-BY-2.0 (http://creativecommons.org/licenses/by/2.0)], via Wikimedia Commons" href="http://commons.wikimedia.org/wiki/File%3AExam.jpg"> qperello</a></small></figcaption>
+      </figure>
+    </section>
+    <section>
+      <h3>Testing Your Code...</h3>
+      <p>... and only your code</p>
+      <ul>
+        <li class="fragment">Don't test the <code>BaseWidget</code> code</li>
+        <li class="fragment">Test outside the builder environment
+          <ul>
+            <li class="fragment">Use the test specs and pages scaffoled by <a href="https://www.npmjs.org/package/generator-esri-widget">generator-esri-widget</a></li>
+          </ul></li>
+      </ul>
+    </section>
+    <section>
+      <h3>Demo: Generating Widgets and Running Tests</h3>
+      <img src="images/karma-screenshot.PNG" alt="screenshot of Karma test resutls" />
+    </section>
+  </section>
+<!--
+  <section class="stack">
+    <section>
+      <h2>What About All the Web AppBuilder Goodies?</h2>
+      <figure>
+        <img src="images/flood-10316989823.jpg" />
+        <figcaption><small><a href="https://www.flickr.com/photos/_flood_/10316989823"><i class="fa fa-flickr"></i> _flood_</a></small></figcaption>
+      </figure>
+    </section>
+    <section>
+      <h3>Using Jimu Without Dependencies</h3>
+      <ul>
+        <li class="fragment">Layout containers (tabs, etc)
+          <ul class="fragment">
+            <li>Place in <span class="fileName">Widget.js / Widget.html</span>, <em>not</em> in your own widgets</li>
+          </ul>
+        </li>
+      </ul>
+      <img class="fragment" src="images/drs-tabs-screenshot.png" />
+    </section>
+    <section>
+      <h3>Using Jimu Without Dependencies</h3>
+      <ul>
+        <li class="fragment">Jimu styles
+          <ul>
+            <li class="fragment">Copy style rules from <span class="fileName">jimu.js/css/jimu.css</span> to <span class="fileName">widgets/YourWidget/css/style.css</span></li>
+            <li class="fragment">Add jimu classes to elements in <span class="fileName">Widjet.js</span>
+            <pre><code>
+  // add jimu classes for consisten look and feel
+  query('input[type=text], textarea, select', this.domNode).addClass('jimu-input');
+  query('button, input[type=button]', this.domNode).addClass('jimu-btn');
+            </code></pre>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Do You Really <em>Need</em> These Jimu Widgets?</h3>
+      <ul>
+        <li class="fragment">Simple form controls (radio buttons, checkboxes, etc)
+          <ul class="fragment">
+            <li>Use plain HTML elements</li>
+          </ul>
+        </li>
+        <li class="fragment">Data components (tables, charts, etc)
+          <ul class="fragment">
+            <li>Use Dojo or other components like <a href="http://dojofoundation.org/packages/dgrid">dgrid</a> or <a href="http://www.chartjs.org/">Chart.js</a> <em>where it makes sense</em></li>
+          </ul>
+        </li>
+        <li class="fragment">Map controls (drawing, editor, etc)
+          <ul class="fragment">
+            <li>Use underlying dijits, toolbars, and tasks from the <a href="https://developers.arcgis.com/javascript/jsapi/">JavaScript API</a> controls <em>where it makes sense</em></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Using Jimu Widgets</h3>
+      <p>Sometimes the Jimu widget is the right tool for the job</p>
+      <ul>
+        <li class="fragment">Copy <span class="fileName">jimu.js</span> folder into your source directory
+          <ul>
+            <li class="fragment">Hide from source control (with <span class="fileName">.gitignore / .tfsignore </span>)</li>
+            <li class="fragment">Add refrences to styles and i18n to test pages</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h3>Demo: Using Jimu Widgets</h3>
+      <img src="images/drs-drawbox-screenshot.png" />
+    </section>
+  </section>
+-->
+  <section class="stack">
+    <section>
+      <h2>Where Can I Find or Share Widgets?</h2>
+      <figure>
+        <img src="images/st3f4n_5542624188.jpg" />
+        <figcaption><small><a href="https://www.flickr.com/photos/st3f4n/5542624188"><i class="fa fa-flickr"></i> st3f4n</a></small></figcaption>
+      </figure>
+    </section>
+    <section>
+      <h3>Sharing</h3>
+      <ul>
+        <li class="fragment">Sharing:
+          <ul>
+            <li><a href="https://geonet.esri.com/groups/web-app-builder-custom-widgets">GeoNet Web AppBuilder Custom Widgets Community</a></li>
+            <li><a href="https://github.com/Esri/arcgis-webappbuilder-widgets-themes">github.com/Esri/arcgis-webappbuilder-widgets-themes</a>
+            <ul><li>Pull requests welcome!</li></ul></li>
+          </ul>
+        </li>
+        <li class="fragment">Discover great widgets:
+          <ul>
+            <li><a href="https://github.com/Esri/solutions-webappbuilder-widgets">https://github.com/Esri/solutions-webappbuilder-widgets</a></li>
+            <li><a href="http://gavinr.github.io/wab-widget-search/">Meta: Search</a> (please submit your github links!)</li>
+            <li>More to come - stay tuned.</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </section>
+  <section class="stack">
+    <section>
+      <h2>Where Can I Get Help?</h2>
+      <figure>
+        <img src="images/frustrated.jpg" />
+        <figcaption><small><a href="https://www.flickr.com/photos/62772618@N08/5752030779"><i class="fa fa-flickr"></i> 62772618@N08</a></small></figcaption>
+      </figure>
+    </section>
+    <section>
+      <h3>Resources</h3>
+      <p>Here are some resources to get you started:</p>
+      <ul>
+
+        <li>Videos:
+          <ul><li>Intro: <a href="http://video.esri.com/watch/3848/arcgis-webapp-builder-an-introduction">UC 2014</a> - <a href="http://video.esri.com/watch/3306/intro-web-appbuilder-for-arcgis_dash_javascript-apps-made-easy">DevSummit 2014</a></li><li>Customizing: <a href="http://video.esri.com/watch/3845/arcgis-webapp-builder-customizing-and-extending">UC 2014</a> - <a href="http://video.esri.com/watch/3362/customizing-and-extending-web-appbuilder-for-arcgis">DevSummit 2014</a></li></ul></li>
+        <li>Documentaion:
+          <ul>
+          <li>Online: <a href="https://developers.arcgis.com/web-appbuilder/">Developer Edition</a> (Download Here!)</li>
+          <li>Bundled: http://localhost:3344/webappbuilder/help/</li></ul></li>
+        <li>GeoNet:
+          <ul>
+            <li><a href="https://geonet.esri.com/community/gis/web-gis/web-appbuilder">Web AppBuilder for ArcGIS Community</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </section>
+  <section>
+    <h2>Thank You</h2>
+    <p>
+      <a href="http://www.esri.com/events/session-rater?id=90#18969">esri.com/events/session-rater?id=90#18969</a>
+    </p>
+    <figure>
+      <img src="images/vote.png" height="500" />
+    </figure>
+    <p>
+      <a href="mailto:grehkemper@esri.com">grehkemper@esri.com</a> -
+      <a href="https://twitter.com/gavinrehkemper">@gavinrehkemper <i class="fa fa-twitter" title="Twitter"></i></a> <a href="https://github.com/gavinr"><i class="fa fa-github" title="GitHub"></i></a>
+
+      <a href="mailto:twayson@esri.com">twayson@esri.com</a> -
+      <a href="https://github.com/tomwayson">@tomwayson</a> <a href="https://twitter.com/tomwayson"><i class="fa fa-twitter" title="Twitter"></i></a> <a href="https://github.com/tomwayson"><i class="fa fa-github" title="GitHub"></i></a>
+    </p>
+  </section>
+</div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
